@@ -9,6 +9,11 @@ module.exports = {
   },
   async create(request, response) {
     const { name, email, whatsapp, city, uf } = request.body;
+
+    if (!name || !email || !whatsapp || !city || !uf) {
+      response.status(422).json({ error: "Missing parameters." });
+    }
+
     const id = crypto.randomBytes(4).toString("HEX");
 
     await connection("ongs").insert({
