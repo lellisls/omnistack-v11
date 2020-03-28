@@ -18,6 +18,7 @@ export default function Incidents() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   async function loadIncidents() {
     if (loading) {
@@ -36,6 +37,21 @@ export default function Incidents() {
     setTotal(response.headers["x-total-count"]);
     setPage(page + 1);
     setLoading(false);
+  }
+
+  async function refreshIncidents() {
+    if (loading || refreshing) {
+      return;
+    }
+
+    setRefreshing(true);
+
+    setTotal(0);
+    setIncidents([]);
+    setPage(1);
+    await loadIncidents();
+
+    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -63,6 +79,9 @@ export default function Incidents() {
         style={styles.incidentList}
         keyExtractor={incident => String(incident.id)}
         onEndReached={loadIncidents}
+        onRefresh={refreshIncidents}
+        refreshing={refreshing}
+        loading={loading}
         onEndReachedThreshold={0.2}
         showsVerticalScrollIndicator={false}
         renderItem={({ item: incident }) => (
