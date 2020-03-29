@@ -8,9 +8,6 @@ import Incident from "../../components/Incident";
 
 import logoImg from "../../assets/logo.png";
 
-import "intl";
-import "intl/locale-data/jsonp/pt-BR";
-
 import api from "../../services/api";
 
 export default function Incidents() {
@@ -38,7 +35,7 @@ export default function Incidents() {
     setLoading(true);
 
     const response = await api.get("incidents", { params: { page } });
-
+    console.log(incidents);
     setIncidents([...incidents, ...response.data]);
     setTotal(response.headers["x-total-count"]);
     setPage(page + 1);

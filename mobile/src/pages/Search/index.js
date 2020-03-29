@@ -12,9 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import Incident from "../../components/Incident";
 
-import "intl";
-import "intl/locale-data/jsonp/pt-BR";
-
 import api from "../../services/api";
 
 export default function Search() {

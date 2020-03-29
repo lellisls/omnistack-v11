@@ -3,6 +3,9 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 
+import "intl";
+import "intl/locale-data/jsonp/pt-BR";
+
 import styles from "./styles";
 
 const index = ({ incident }) => {
