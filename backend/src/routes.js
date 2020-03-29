@@ -30,10 +30,10 @@ routes.post(
       email: Joi.string()
         .email()
         .required(),
-      whatsapp: Joi.number()
+      whatsapp: Joi.string()
         .required()
-        .min(11111111)
-        .max(9999999999999),
+        .min(9)
+        .max(14),
       city: Joi.string().required(),
       uf: Joi.string()
         .required()
@@ -94,13 +94,23 @@ routes.delete(
 );
 
 routes.get(
-  "/search",
+  "/search/incidents",
   celebrate({
     [Segments.QUERY]: Joi.object().keys({
       query: Joi.string().required()
     })
   }),
   SearchController.searchIncidents
+);
+
+routes.get(
+  "/search/ongs",
+  celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+      query: Joi.string().required()
+    })
+  }),
+  SearchController.searchOngs
 );
 
 module.exports = routes;

@@ -35,6 +35,12 @@ module.exports = {
       .select(["name", "whatsapp", "city", "uf"])
       .first();
 
+    if (!ong) {
+      return response.status(401).json({
+        error: "Operation not permitted."
+      });
+    }
+
     const [id] = await connection("incidents").insert({
       title,
       description,
@@ -46,6 +52,7 @@ module.exports = {
 
     await client.index({
       index: "incidents",
+      id,
       body: {
         title,
         description,
