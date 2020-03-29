@@ -29,11 +29,19 @@ module.exports = {
       }
 
       const incidents = await connection("incidents")
+        .join("ongs", "ongs.id", "=", "incidents.ong_id")
         .whereIn(
-          "id",
+          "incidents.id",
           body.hits.hits.map(incident => incident._id)
         )
-        .select("*");
+        .select([
+          "incidents.*",
+          "ongs.name",
+          "ongs.email",
+          "ongs.whatsapp",
+          "ongs.city",
+          "ongs.uf"
+        ]);
 
       console.log(incidents);
       response.json(incidents);

@@ -28,7 +28,7 @@ export default function Search() {
   }
 
   async function searchIncidents(query) {
-    if (query && query.length > 3) {
+    if (!query || query.length < 3) {
       return;
     }
 
@@ -46,7 +46,7 @@ export default function Search() {
         <TextInput
           style={styles.searchField}
           onChangeText={searchIncidents}
-          placeholder="Pesquisar ONGs e incidentes"
+          placeholder="Pesquisar incidentes"
         />
         <TouchableOpacity onPress={navigateBack}>
           <Feather name="arrow-left" size={28} color="#E82041" />

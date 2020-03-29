@@ -68,7 +68,7 @@ export default function Incidents() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={logoImg} style={styles.logo} />
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.headerText}>
             Total de <Text style={styles.headerTextBold}>{total} casos</Text>
           </Text>
@@ -76,7 +76,7 @@ export default function Incidents() {
             style={styles.searchButton}
             onPress={navigateToSearch}
           >
-            <Feather name="search" size={16} color="#E02041" />
+            <Feather name="search" size={28} color="#E02041" />
           </TouchableOpacity>
         </View>
       </View>
