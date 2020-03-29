@@ -19,8 +19,14 @@ export default StyleSheet.create({
     color: "#737380"
   },
 
-  headerTextBold: {
-    fontWeight: "bold"
+  searchField: {
+    height: 40,
+    borderColor: "#A3A3B0",
+    backgroundColor: "#FFF",
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    width: '90%'
   },
 
   title: {
