@@ -4,6 +4,7 @@ const OngController = require("./controllers/OngController");
 const IncidentController = require("./controllers/IncidentController");
 const ProfileController = require("./controllers/ProfileController");
 const SessionController = require("./controllers/SessionController");
+const SearchController = require("./controllers/SearchController");
 
 const { celebrate, Segments, Joi } = require("celebrate");
 
@@ -13,7 +14,7 @@ routes.post(
   "/session",
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-        id: Joi.string().required()
+      id: Joi.string().required()
     })
   }),
   SessionController.create
@@ -61,6 +62,7 @@ routes.get(
   }),
   IncidentController.index
 );
+
 routes.post(
   "/incidents",
   celebrate({
@@ -82,13 +84,23 @@ routes.delete(
   "/incidents/:id",
   celebrate({
     [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required()
-      }).unknown(),
+      authorization: Joi.string().required()
+    }).unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       id: Joi.number().required()
     })
   }),
   IncidentController.delete
+);
+
+routes.get(
+  "/search",
+  celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+      query: Joi.string().required()
+    })
+  }),
+  SearchController.searchIncidents
 );
 
 module.exports = routes;

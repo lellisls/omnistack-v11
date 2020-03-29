@@ -1,4 +1,5 @@
 const connection = require("../database/connection");
+const client = require("../services/ElasticSearchClient");
 
 module.exports = {
   async index(request, response) {
@@ -29,12 +30,36 @@ module.exports = {
     const { title, description, value } = request.body;
     const ong_id = request.headers.authorization;
 
+    const ong = await connection("ongs")
+      .where("id", ong_id)
+      .select(["name", "whatsapp", "city", "uf"])
+      .first();
+
     const [id] = await connection("incidents").insert({
       title,
       description,
       value,
       ong_id
     });
+
+    const { name, whatsapp, city, uf } = ong;
+
+    await client.index({
+      index: "incidents",
+      body: {
+        title,
+        description,
+        value,
+        ong_id,
+        id,
+        name,
+        whatsapp,
+        city,
+        uf
+      }
+    });
+
+    await client.indices.refresh({ index: "incidents" });
 
     return response.json({ id });
   },
